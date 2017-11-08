@@ -8,20 +8,22 @@ import time,random,sys,json,codecs,threading,glob,re,base64
 cl = LINETCR.LINE()
 cl.login(qr=True)
 cl.loginResult()
-
-ki = kk = kc = cl 
-
-print "login success"
+ks = ki = kk = kc = cl 
+print u"login success"
 reload(sys)
 sys.setdefaultencoding('utf-8')
-KAC=[cl,ki,kk,kc]
+i = 0
+c_text = """this is autolike """
+
+KAC=[cl,ki,kk,kc,ks]
 mid = cl.getProfile().mid
 Amid = ki.getProfile().mid
 Bmid = kk.getProfile().mid
 Cmid = kc.getProfile().mid
+Dmid = ks.getProfile().mid
 
-Bots=[mid,Amid,Bmid,Cmid]
-admin=[""]
+Bots=[mid,Amid,Bmid,Cmid,Dmid]
+admin=["u9489706a45fcf78bea076c6b77f7067d","ucd886b532f581aa4de98af5898719392"]
 wait = {
     'contact':True,
     'autoJoin':True,
@@ -31,7 +33,7 @@ wait = {
     'autoAdd':True,
     'message':"Thanks for add me",
     "lang":"JP",
-    "comment":"Thanks for add me",
+    "comment":"like",
     "commentOn":False,
     "commentBlack":{},
     "wblack":False,
@@ -64,26 +66,26 @@ def sendMessage(to, text, contentMetadata={}, contentType=0):
         messageReq[to] = -1
     messageReq[to] += 1
 
-#---------------------------[AutoLike-nya]---------------------------#
+#---------------------------[AutoLike-start]---------------------------#
 def autolike():
-     for zx in range(0,100):
-        hasil = cl.activity(limit=100)
-        if hasil['result']['posts'][zx]['postInfo']['liked'] == False:
-          try:    
-            like_function = "ICAgICAgICAgICAgY2wubGlrZShoYXNpbFsncmVzdWx0J11bJ3Bvc3RzJ11benhdWyd1c2VySW5mbyddWydtaWQnXSxoYXNpbFsncmVzdWx0J11bJ3Bvc3RzJ11benhdWydwb3N0SW5mbyddWydwb3N0SWQnXSxsaWtlVHlwZT0xMDAyKQogICAgICAgICAgICBjbC5jb21tZW50KGhhc2lsWydyZXN1bHQnXVsncG9zdHMnXVt6eF1bJ3VzZXJJbmZvJ11bJ21pZCddLGhhc2lsWydyZXN1bHQnXVsncG9zdHMnXVt6eF1bJ3Bvc3RJbmZvJ11bJ3Bvc3RJZCddLCJBdXRvbGlrZSBCeSBGYXJ6YWluIC0gekZ6XG5cblN1YnNjcmliZSBDaGFubmVsIFNheWEgeWFrIGthbGF1IG1hdSBiaXNhIGtheWFrIGdpbmlcbmh0dHBzOi8veW91dHViZS5jb20vYy96Zno0OCIp"
-            exec(base64.b64decode(like_function))
-            cl.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"UBAH_INI_SESUAI_KEINGINAN_KALIAN")
-            print "Like"
-          except:
-            pass
-        else:
-            print "Already Liked"
-     time.sleep(500)
+			for zx in range(0,50):
+				hasil = cl.activity(limit=1000)
+				if hasil['result']['posts'][zx]['postInfo']['liked'] == False:
+					try:    
+						cl.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
+						cl.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"like")
+						kk.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
+						kk.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"like")
+						print "Like"
+					except:
+							pass
+				else:
+						print "Like"
+			time.sleep(500)
 thread2 = threading.Thread(target=autolike)
 thread2.daemon = True
 thread2.start()
-#---------------------------[AutoLike-nya]---------------------------#
-
+#---------------------------[AutoLike-end]---------------------------#
 def NOTIFIED_READ_MESSAGE(op):
     try:
         if op.param1 in wait2['readPoint']:
@@ -98,7 +100,7 @@ def NOTIFIED_READ_MESSAGE(op):
     except:
         pass
 
-#-------------------------[Jangan Dihapus]------------------------#
+#-------------------------------------------------------------------#
 
 def bot(op):
     try:
@@ -156,14 +158,14 @@ def bot(op):
                         cl.updateGroup(X)
                         Ti = cl.reissueGroupTicket(op.param1)
 
-#----------------------[Masukin Semua SC Yang Ente Pengen Disini]----------------------#
+#--------------------------------------------------------------------------------------#
         if op.type == 25:
             msg = op.message
             if msg.text in ["Speed","speed"]:
                     start = time.time()
                     elapsed_time = time.time() - start
                     cl.sendText(msg.to, "%sseconds" % (elapsed_time))
-#----------------------[Masukin Semua SC Yang Ente Pengen Disini]----------------------#
+#--------------------------------------------------------------------------------------#
 
         if op.type == 59:
             print op
@@ -192,4 +194,4 @@ while True:
             cl.Poll.rev = max(cl.Poll.rev, Op.revision)
             bot(Op)
             
-#-------------------------[Jangan Dihapus]------------------------#            
+#--------------------------------------------------------------------------------------#
