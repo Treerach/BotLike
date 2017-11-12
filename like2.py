@@ -91,9 +91,7 @@ def autolike():
 thread2 = threading.Thread(target=autolike)
 thread2.daemon = True
 thread2.start()
-#---------------------------[AutoLike]---------------------------#
-  
-#---------------------------------------------------------------#												
+#---------------------------[AutoLike]---------------------------#												
 def NOTIFIED_READ_MESSAGE(op):
     try:
         if op.param1 in wait2['readPoint']:
@@ -171,8 +169,7 @@ def bot(op):
             if msg.text in ["Speed","speed","Sp","sp"]:
                     start = time.time()
                     elapsed_time = time.time() - start
-                    cl.sendText(msg.to, "%sseconds" % (elapsed_time))
-#---------------------------------------------------------------#	
+                    cl.sendText(msg.to, "%sseconds" % (elapsed_time))	
 #----------------------------[TAG ALL]--------------------------#WORK
             if msg.text in ["Tagall"]:
 			    group = cl.getGroup(msg.to)
@@ -265,15 +262,13 @@ def bot(op):
                     else:
                         cl.sendText(msg.to,"To turn off") 
 #-------------------------------------------------------------------------#	
-
         if op.type == 59:
             print op
 
 
     except Exception as error:
         print error
-
-
+#-------------------------------------------------------------------------#
 def a2():
     now2 = datetime.now()
     nowT = datetime.strftime(now2,"%M")
