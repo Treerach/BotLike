@@ -91,7 +91,9 @@ def autolike():
 thread2 = threading.Thread(target=autolike)
 thread2.daemon = True
 thread2.start()
-#---------------------------[AutoLike]---------------------------#												
+#---------------------------[AutoLike]---------------------------#
+  
+#---------------------------------------------------------------#												
 def NOTIFIED_READ_MESSAGE(op):
     try:
         if op.param1 in wait2['readPoint']:
@@ -169,7 +171,8 @@ def bot(op):
             if msg.text in ["Speed","speed","Sp","sp"]:
                     start = time.time()
                     elapsed_time = time.time() - start
-                    cl.sendText(msg.to, "%sseconds" % (elapsed_time))	
+                    cl.sendText(msg.to, "%sseconds" % (elapsed_time))
+#---------------------------------------------------------------#	
 #----------------------------[TAG ALL]--------------------------#WORK
             if msg.text in ["Tagall"]:
 			    group = cl.getGroup(msg.to)
@@ -194,42 +197,6 @@ def bot(op):
 			        print error
 #----------------------------[TAG ALL]-------------------------------------#WORK
 
-#----------------------------[Kick By Multi Tag]----------------------------#WORK 
-            if ("Bye " in msg.text):
-                key = eval(msg.contentMetadata["MENTION"])
-                key["MENTIONEES"][0]["M"]
-                targets = []
-                for x in key["MENTIONEES"]:
-                    targets.append(x["M"])
-                for target in targets:
-                   try:
-                      cl.kickoutFromGroup(msg.to,[target])
-                   except:
-                      pass
-#----------------------------[Kick By Multi Tag]----------------------------#WORK                  
-
-#----------------------------[Kick All Member]----------------------------#WORK  
-                if msg.text == "Kick all":
-                    print "ok"
-                    _name = msg.text.replace("Kick all","")
-                    gs = cl.getGroup(msg.to)
-                    sendMessage(msg.to,"Kick all")
-                    targets = []
-                    for g in gs.members:
-                        if _name in g.displayName:
-                            targets.append(g.mid)
-                    if targets == []:
-                        sendMessage(msg.to,"error")
-                    else:
-                        for target in targets:
-                            try:
-                                klist=[cl]
-                                kicker=random.choice(klist)
-                                kicker.kickoutFromGroup(msg.to,[target])
-                                print (msg.to,[g.mid])
-                            except:
-                                cl.sendText(msg.to,"error")
-#----------------------------[Kick All Member]----------------------------#WORK  
             elif "Comment set: " in msg.text:
                 c = msg.text.replace("Comment set: ","")
                 if c in [""," ","\n",None]:
@@ -262,13 +229,15 @@ def bot(op):
                     else:
                         cl.sendText(msg.to,"To turn off") 
 #-------------------------------------------------------------------------#	
+
         if op.type == 59:
             print op
 
 
     except Exception as error:
         print error
-#-------------------------------------------------------------------------#
+
+
 def a2():
     now2 = datetime.now()
     nowT = datetime.strftime(now2,"%M")
