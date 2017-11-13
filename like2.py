@@ -6,14 +6,12 @@ from datetime import datetime
 import time,random,sys,json,codecs,threading,glob,re,base64
 
 cl = LINETCR.LINE()
-print u"""login start"""
 cl.login(qr=True)
 cl.loginResult()
 ks = ki = kk = kc = cl 
 print u"login success"
 reload(sys)
 sys.setdefaultencoding('utf-8')
-print u"login success"
 
 KAC=[cl,ki,kk,kc,ks]
 mid = cl.getProfile().mid
@@ -27,7 +25,7 @@ admin=["u9489706a45fcf78bea076c6b77f7067d","ucd886b532f581aa4de98af5898719392"]
 wait = {
     'contact':True,
     'autoJoin':True,
-    'autoCancel':{"on":True,"members":10},
+    'autoCancel':{"on":True,"members":1},
     'leaveRoom':True,
     'timeline':True,
     'autoAdd':True,
@@ -57,7 +55,7 @@ wait2 = {
 setTime = {}
 setTime = wait2['setTime']
 
-#-------------------------------------------------------------------------#	
+
 def sendMessage(to, text, contentMetadata={}, contentType=0):
     mes = Message()
     mes.to, mes.from_ = to, profile.mid
@@ -107,6 +105,7 @@ def NOTIFIED_READ_MESSAGE(op):
             pass
     except:
         pass
+
 #---------------------------------------------------------------#	
 def bot(op):
     try:
@@ -119,7 +118,6 @@ def bot(op):
                     pass
                 else:
                     cl.sendText(op.param1,str(wait["message"]))
-#---------------------------------------------------------------#										
         if op.type == 13:
                 if op.param3 in mid:
                     if op.param2 in Amid:
@@ -164,24 +162,7 @@ def bot(op):
                         X.preventJoinByTicket = True
                         cl.updateGroup(X)
                         Ti = cl.reissueGroupTicket(op.param1)
-#---------------------------------------------------------------#	
-        if op.type == 13:
-            print op.param1
-            print op.param2
-            print op.param3
-            if mid in op.param3:
-                G = cl.getGroup(op.param1)
-                if wait["autoJoin"] == True:
-                    if wait["autoCancel"]["on"] == True:
-                        if len(G.members) <= wait["autoCancel"]["members"]:
-                            cl.rejectGroupInvitation(op.param1)
-                        else:
-                            cl.acceptGroupInvitation(op.param1)
-                    else:
-                        cl.acceptGroupInvitation(op.param1)
-                elif wait["autoCancel"]["on"] == True:
-                    if len(G.members) <= wait["autoCancel"]["members"]:
-                        cl.rejectGroupInvitation(op.param1)												
+
 #---------------------------------------------------------------#	
         if op.type == 25:
             msg = op.message
@@ -189,6 +170,7 @@ def bot(op):
                     start = time.time()
                     elapsed_time = time.time() - start
                     cl.sendText(msg.to, "%sseconds" % (elapsed_time))
+#---------------------------------------------------------------#	
 #----------------------------[TAG ALL]--------------------------#WORK
             if msg.text in ["Tagall"]:
 			    group = cl.getGroup(msg.to)
@@ -219,7 +201,7 @@ def bot(op):
                 else:
                     wait["comment"] = c
                     cl.sendText(msg.to,"This has been changed👈\n\n" + c)
-            elif msg.text in ["Com on","Com:on","Comment on","com:on"]:
+            elif msg.text in ["Com on","Com:on","Comment on"]:
                 if wait["commentOn"] == True:
                     if wait["lang"] == "JP":
                         cl.sendText(msg.to,"I was on👈")
@@ -228,23 +210,21 @@ def bot(op):
                 else:
                     wait["commentOn"] = True
                     if wait["lang"] == "JP":
-                        cl.sendText(msg.to,"It is already turned on👈")
+                        cl.sendText(msg.to,"It is already turned on")
                     else:
                         cl.sendText(msg.to,"è¦äº†å¼€👈")
-            elif msg.text in ["Com off","Com:off","com:off"]:
+            elif msg.text in ["Com off"]:
                 if wait["commentOn"] == False:
                     if wait["lang"] == "JP":
-                        cl.sendText(msg.to,"It is already turned off👈")
+                        cl.sendText(msg.to,"It is already turned off")
                     else:
-                        cl.sendText(msg.to,"It is already turned off👈")
+                        cl.sendText(msg.to,"It is already turned off")
                 else:
                     wait["commentOn"] = False
                     if wait["lang"] == "JP":
-                        cl.sendText(msg.to,"It is already turned off👈")
+                        cl.sendText(msg.to,"Off👈")
                     else:
-                        cl.sendText(msg.to,"It is already turned off👈") 
-#-------------------------------------------------------------------------#	
-
+                        cl.sendText(msg.to,"To turn off") 
 #-------------------------------------------------------------------------#	
         if op.type == 59:
             print op
@@ -252,7 +232,8 @@ def bot(op):
 
     except Exception as error:
         print error
-#-------------------------------------------------------------------------#	
+
+
 def a2():
     now2 = datetime.now()
     nowT = datetime.strftime(now2,"%M")
@@ -260,7 +241,7 @@ def a2():
         return False
     else:
         return True
-#-------------------------------------------------------------------------#	
+
 while True:
     try:
         Ops = cl.fetchOps(cl.Poll.rev, 5)
