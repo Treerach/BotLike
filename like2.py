@@ -6,12 +6,14 @@ from datetime import datetime
 import time,random,sys,json,codecs,threading,glob,re,base64
 
 cl = LINETCR.LINE()
+print u"""login start"""
 cl.login(qr=True)
 cl.loginResult()
 ks = ki = kk = kc = cl 
 print u"login success"
 reload(sys)
 sys.setdefaultencoding('utf-8')
+print u"login success"
 
 KAC=[cl,ki,kk,kc,ks]
 mid = cl.getProfile().mid
@@ -25,13 +27,13 @@ admin=["u9489706a45fcf78bea076c6b77f7067d","ucd886b532f581aa4de98af5898719392"]
 wait = {
     'contact':True,
     'autoJoin':True,
-    'autoCancel':{"on":True,"members":1},
+    'autoCancel':{"on":True,"members":10},
     'leaveRoom':True,
     'timeline':True,
     'autoAdd':True,
     'message':"Thanks for add me",
     "lang":"JP",
-    "comment":"Auto Like by Ŧяәәƅoŧ",
+    "comment":"like by ™Ŧяәәƅoŧ",
     "commentOn":True,
     "likeOn":True,
     "commentBlack":{},
@@ -74,14 +76,12 @@ def autolike():
              if posts["postInfo"]["liked"] is False:
                 if wait["likeOn"] == True:
                    cl.like(posts["userInfo"]["writerMid"], posts["postInfo"]["postId"], 1001)
-                   ki.like(posts["userInfo"]["writerMid"], posts["postInfo"]["postId"], 1001)
                    print "Like"
                    if wait["commentOn"] == True:
                       if posts["userInfo"]["writerMid"] in wait["commentBlack"]:
                          pass
                       else:
                           cl.comment(posts["userInfo"]["writerMid"],posts["postInfo"]["postId"],wait["comment"])
-                          ki.comment(posts["userInfo"]["writerMid"],posts["postInfo"]["postId"],wait["comment"])
         except:
             count += 1
             if(count == 50):
@@ -204,7 +204,7 @@ def bot(op):
             elif msg.text in ["Com on","Com:on","Comment on"]:
                 if wait["commentOn"] == True:
                     if wait["lang"] == "JP":
-                        cl.sendText(msg.to,"I was on👈")
+                        cl.sendText(msg.to,"It is already turned on👈")
                     else:
                         cl.sendText(msg.to,"To open👈")
                 else:
@@ -213,7 +213,7 @@ def bot(op):
                         cl.sendText(msg.to,"It is already turned on")
                     else:
                         cl.sendText(msg.to,"è¦äº†å¼€👈")
-            elif msg.text in ["Com off"]:
+            elif msg.text in ["Com off","Com:off","Comment off"]:
                 if wait["commentOn"] == False:
                     if wait["lang"] == "JP":
                         cl.sendText(msg.to,"It is already turned off")
@@ -226,7 +226,7 @@ def bot(op):
                     else:
                         cl.sendText(msg.to,"To turn off") 
             elif msg.text in ["Com","Comment check"]:
-                cl.sendText(msg.to,"Auto commenting is currently set as follows:\n\n" + str(wait["comment"]))			
+                cl.sendText(msg.to,"Auto commenting is currently set as follows:\n\n" + str(wait["comment"]))												
 #-------------------------------------------------------------------------#	
         if op.type == 59:
             print op
