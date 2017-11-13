@@ -225,6 +225,8 @@ def bot(op):
                         cl.sendText(msg.to,"Off👈")
                     else:
                         cl.sendText(msg.to,"To turn off") 
+            elif msg.text in ["Com","Comment check"]:
+                cl.sendText(msg.to,"Auto commenting is currently set as follows:\n\n" + str(wait["comment"]))			
 #-------------------------------------------------------------------------#	
         if op.type == 59:
             print op
