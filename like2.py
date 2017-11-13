@@ -6,13 +6,14 @@ from datetime import datetime
 import time,random,sys,json,codecs,threading,glob,re,base64
 
 cl = LINETCR.LINE()
+print u"""login start"""
 cl.login(qr=True)
 cl.loginResult()
 ks = ki = kk = kc = cl 
 print u"login success"
 reload(sys)
 sys.setdefaultencoding('utf-8')
-
+print u"login success"
 KAC=[cl,ki,kk,kc,ks]
 mid = cl.getProfile().mid
 Amid = ki.getProfile().mid
