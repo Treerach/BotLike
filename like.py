@@ -12,7 +12,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 print u"login success"
 i = 0
-c_text = """like by ™Ŧяәәƅoŧ"""
+c_text = """Like by ™Ŧяәәƅoŧ"""
 #------------------------
 while True:
     try:
