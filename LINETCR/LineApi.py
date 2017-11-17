@@ -311,8 +311,9 @@ class LINE:
 
       prof = self.getProfile()
 
-      print("\n\nBotLike By Farzain-zFz\nForked From LIN3-TCR\nhttps://youtube.com/c/zfz48\n\n\n\n\n")
-      print("mid -> " + prof.mid)
-      print("name -> " + prof.displayName)
-      print("authToken -> " + self.authToken)
-      print("cert -> " + self.cert if self.cert is not None else "")
+      print("Success Logged in")
+      print("Mid 	   : " + prof.mid)
+      print("Name 	   : " + prof.displayName)
+      print("AuthToken : " + self.authToken)
+      print("Cert 	   : " + self.cert if self.cert is not None else "")
+
